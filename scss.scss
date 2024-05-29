@@ -1,156 +1,164 @@
-/* Basisstijlen */
+// Basisstijlen
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    }
-    /* Header */
-    header {
+}
+
+// Header
+header {
     background-color: #333;
     color: #fff;
     padding: 20px;
     text-align: center;
-    }
-    /* Navigatiebalk */
-    nav {
+}
+
+// Navigatiebalk
+nav {
     background-color: #444;
     padding: 10px;
-    }
-    nav ul {
+}
+
+nav ul {
     list-style-type: none;
     margin: 0;
-    padding: 0;
-    text-align: center;
-    }
-    nav ul li {
-    display: inline;
-    margin-right: 20px;
-    }
-    nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    }
-    /* Main Content */
-    main {
-    padding: 20px;
-    }
-    /* Footer */
-    footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    }
-    /* Algemene stijlen */
-    body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    }
-    header, nav, main, footer {
-    padding: 20px;
-    text-align: center;
-    }
-    header {
-    background-color: #000000;
-    border-bottom: 1px solid #e9ecef;
-    }
-    header h1 {
-    margin: 0;
-    }
-    nav ul {
-    list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 0;
-    }
-    nav ul li {
+}
+
+nav ul li {
     margin: 5px;
-    }
-    nav ul li a {
+}
+
+nav ul li a {
+    color: #fff;
     text-decoration: none;
-    color: #007bff;
     padding: 10px;
     border: 1px solid #007bff;
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
-    }
-    nav ul li a:hover {
+}
+
+nav ul li a:hover {
     background-color: #007bff;
     color: #fff;
-    }
-    main {
+}
+
+// Main Content
+main {
     padding: 20px;
-    }
-    footer {
-    background-color: #000000;
-    border-top: 1px solid #e9ecef;
-    padding: 10px 20px;
-    }
-    footer ul {
+}
+
+// Footer
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+footer ul {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: 10px 0 0;
-    }
-    footer ul li {
+}
+
+footer ul li {
     margin: 5px;
-    }
-    footer ul li a {
+}
+
+footer ul li a {
     text-decoration: none;
     color: #007bff;
-    }
-    footer p {
+}
+
+footer p {
     margin: 10px 0;
+}
+
+// Media queries voor verschillende schermgroottes
+$breakpoints: (
+    mobile: 0,
+    small-tablet: 600px,
+    large-tablet: 768px,
+    desktop: 992px,
+    large-desktop: 1200px
+);
+
+@mixin responsive($device) {
+    @if map-has-key($breakpoints, $device) {
+        @media (min-width: map-get($breakpoints, $device)) {
+            @content;
+        }
     }
-    /* Media queries voor verschillende schermgroottes */
-    /* Stijlen voor mobiele apparaten (standaard) */
-    body {
+}
+
+// Stijlen voor mobiele apparaten (standaard)
+body {
     font-size: 16px;
-    }
-    header, nav, main, footer {
+}
+
+header, nav, main, footer {
     padding: 10px;
-    }
-    nav ul {
+}
+
+nav ul {
     flex-direction: column;
-    }
-    nav ul li {
+}
+
+nav ul li {
     margin: 5px 0;
+}
+
+@each $device, $value in $breakpoints {
+    @include responsive($device) {
+        @if $device == small-tablet or $device == large-tablet or $device == desktop or $device == large-desktop {
+            body {
+                font-size: if($device == small-tablet or $device == large-tablet, 18px, 20px);
+            }
+
+            header, nav, main, footer {
+                @if $device == small-tablet {
+                    padding: 20px;
+                }
+                @else if $device == large-tablet {
+                    padding: 20px;
+                }
+                @else if $device == desktop {
+                    padding: 30px;
+                }
+                @else if $device == large-desktop {
+                    padding: 40px;
+                }
+            }
+
+            nav ul {
+                flex-direction: row;
+            }
+
+            nav ul li {
+                margin: if($device == small-tablet or $device == large-tablet, 0 10px, if($device == desktop, 0 15px, 0 20px));
+            }
+
+            main {
+                @if $device == small-tablet {
+                    padding: 30px;
+                }
+                @else if $device == large-tablet {
+                    padding: 40px;
+                }
+                @else if $device == desktop {
+                    padding: 50px;
+                }
+                @else if ($device == large-desktop) {
+                    padding: 60px;
+                }
+            }
+        }
     }
-    /* Stijlen voor tablets */
-    @media (min-width: 600px) {
-    body {
-    font-size: 18px;
-    }
-    header, nav, main, footer {
-    padding: 20px;
-    }
-    nav ul {
-    flex-direction: row;
-    }
-    nav ul li {
-    margin: 0 10px;
-    }
-    main {
-    padding: 40px;
-    }
-    }
-    /* Stijlen voor desktops */
-    @media (min-width: 900px) {
-    body {
-    font-size: 20px;
-    }
-    header, nav, main, footer {
-    padding: 30px;
-    }
-    nav ul li {
-    margin: 0 15px;
-    }
-    main {
-    padding: 60px;
-    }
-    }
+}
